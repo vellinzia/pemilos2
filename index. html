@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Voting Ketua OSIS SMKN 1 Ampelgading</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eef3ff;
+            font-family: Arial, sans-serif;
+        }
 
+        header {
+            background: #003cff;
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .kandidat-card {
+            display: flex;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .kandidat-card img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #003cff;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .info h2 {
+            margin: 0 0 10px;
+            color: #003cff;
+        }
+
+        .vote-btn {
+            padding: 12px 20px;
+            background: #003cff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .vote-btn:hover {
+            background: #002bb3;
+        }
+
+        /* Hasil Voting */
+        .hasil-box {
+            margin-top: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .bar {
+            height: 25px;
+            background: #003cff;
+            margin: 5px 0 15px;
+            border-radius: 5px;
+            transition: .3s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 35px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>E-VOTING KETUA OSIS</h1>
+    <h2>SMKN 1 AMPELGADING</h2>
+</header>
+
+<div class="container">
+
+    <!-- KANDIDAT -->
+    <div class="kandidat-card">
+        <img src="https://via.placeholder.com/130">
+        <div class="info">
+            <h2>1. Andi Pratama</h2>
+            <p>Visi: Membangun OSIS yang aktif, kreatif dan inovatif.</p>
+        </div>
+        <button class="vote-btn" onclick="vote('andi')">Pilih</button>
+    </div>
+
+    <div class="kandidat-card">
+        <img src="https://via.placeholder.com/130">
+        <div class="info">
+            <h2>2. Bunga Lestari</h2>
+            <p>Visi: Menjadikan sekolah yang berprestasi dan berkarakter.</p>
+        </div>
+        <button class="vote-btn" onclick="vote('bunga')">Pilih</button>
+    </div>
+
+    <div class="kandidat-card">
+        <img src="https://via.placeholder.com/130">
+        <div class="info">
+            <h2>3. Candra Wijaya</h2>
+            <p>Visi: Menciptakan lingkungan nyaman dan produktif.</p>
+        </div>
+        <button class="vote-btn" onclick="vote('candra')">Pilih</button>
+    </div>
+
+    <!-- HASIL VOTING -->
+    <div class="hasil-box">
+        <h2>📊 Hasil Perbandingan Suara</h2>
+        <p>Jumlah suara akan terus berubah sesuai pemilih.</p>
+
+        <p>Andi Pratama: <span id="v1">0</span> suara</p>
+        <div class="bar" id="b1"></div>
+
+        <p>Bunga Lestari: <span id="v2">0</span> suara</p>
+        <div class="bar" id="b2"></div>
+
+        <p>Candra Wijaya: <span id="v3">0</span> suara</p>
+        <div class="bar" id="b3"></div>
+    </div>
+
+</div>
+
+<footer>
+    © 2025 E-Voting OSIS SMKN 1 Ampelgading
+</footer>
+
+<script>
+    // Load data dari localStorage
+    let votes = {
+        andi: parseInt(localStorage.getItem("andi") || 0),
+        bunga: parseInt(localStorage.getItem("bunga") || 0),
+        candra: parseInt(localStorage.getItem("candra") || 0)
+    };
+
+    // Fungsi voting
+    function vote(nama) {
+        votes[nama]++;
+        localStorage.setItem(nama, votes[nama]);
+        alert("Anda memilih: " + nama.toUpperCase());
+        updateResults();
+    }
+
+    // Update tampilan hasil
+    function updateResults() {
+        let total = votes.andi + votes.bunga + votes.candra;
+
+        document.getElementById("v1").innerText = votes.andi;
+        document.getElementById("v2").innerText = votes.bunga;
+        document.getElementById("v3").innerText = votes.candra;
+
+        // Lebar bar berdasarkan persentase
+        document.getElementById("b1").style.width = total ? (votes.andi / total * 100) + "%" : "0%";
+        document.getElementById("b2").style.width = total ? (votes.bunga / total * 100) + "%" : "0%";
+        document.getElementById("b3").style.width = total ? (votes.candra / total * 100) + "%" : "0%";
+    }
+
+    // Tampilkan hasil awal
+    updateResults();
+</script>
+
+</body>
+</html>
